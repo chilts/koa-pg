@@ -19,7 +19,7 @@
     "url": "git://github.com/chilts/koa-pg.git"
   },
   "bugs": {
-    "url": "http://github.com/chilts/koa-pg/issues",
+    "url": "https://github.com/chilts/koa-pg/issues",
     "mail": "andychilton@gmail.com"
   },
   "licenses": [
