@@ -32,7 +32,15 @@ module.exports = function(conString) {
         self.pg = client
 
         // yield to all middlewares
-        yield next
+        try {
+            yield next
+        }
+        catch (e) {
+            // Since there was an error somewhere down the middleware,
+            // then we need to throw this client away.
+            done(e)
+            throw e
+        }
 
         // on the way back up the stack, release the client
         done()
