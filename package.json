@@ -1,0 +1,39 @@
+{
+  "name": "koa-pg",
+  "description": "Koa middleware to get you a Postgres client.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/chilts/koa-pg",
+  "dependencies": {
+    "thunkify": "0.0.1"
+  },
+  "devDependencies": {
+    "koa": "~0.1.2"
+  },
+  "author": {
+    "name": "Andrew Chilton",
+    "email": "andychilton@gmail.com",
+    "url": "http://www.chilts.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chilts/koa-pg.git"
+  },
+  "bugs": {
+    "url": "http://github.com/chilts/koa-pg/issues",
+    "mail": "andychilton@gmail.com"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://chilts.mit-license.org/2013/"
+    }
+  ],
+  "keywords": [
+    "koa",
+    "koa middleware",
+    "middleware",
+    "pg",
+    "postgres",
+    "postgresql"
+  ]
+}
