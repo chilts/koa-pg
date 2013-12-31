@@ -1,5 +1,5 @@
 var koa = require('koa')
-var koaPg = require('./index.js')
+var koaPg = require('../index.js')
 
 var app = koa()
 
@@ -11,7 +11,7 @@ app.use(function *(next) {
     console.log('result:', result)
 
     // if we get here, return a body
-    this.body = 'Hello, World!'
+    this.body = result.rows[0].now.toISOString()
 })
 
 app.listen(3000)

@@ -1,5 +1,5 @@
 var koa = require('koa')
-var koaPg = require('./index.js')
+var koaPg = require('../index.js')
 
 var app = koa()
 
@@ -10,7 +10,7 @@ app.use(function *(next) {
     var result = yield this.client.query_('SELECT blah()')
     console.log('result:', result)
 
-    this.body = 'Hello, World!'
+    this.body = 'Never reached'
 })
 
 app.listen(3000)
