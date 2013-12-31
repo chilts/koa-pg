@@ -18,8 +18,10 @@ module.exports = function(conStr) {
 
     return function *koaPg(next) {
         var connect = yield pg.connect_(conStr)
-        this.client = connect[0]
-        this.done   = connect[1]
+        this.pg = {
+            client : connect[0],
+            done   : connect[1],
+        }
 
         // yield to all middlewares
         try {
@@ -28,16 +30,14 @@ module.exports = function(conStr) {
         catch (e) {
             // Since there was an error somewhere down the middleware,
             // then we need to throw this client away.
-            this.done(e)
-            delete this.client
-            delete this.done
+            this.pg.done(e)
+            delete this.pg
             throw e
         }
 
         // on the way back up the stack, release the client
-        this.done()
-        delete this.client
-        delete this.done
+        this.pg.done()
+        delete this.pg
     }
     
 }

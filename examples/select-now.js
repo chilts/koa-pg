@@ -7,7 +7,7 @@ app.use(koaPg('postgres://user:password@localhost:5432/database'))
 
 app.use(function *(next) {
     // Here we have access to this.pg which is client returned from pg.connect().
-    var result = yield this.client.query_('SELECT now()')
+    var result = yield this.pg.client.query_('SELECT now()')
     console.log('result:', result)
 
     // if we get here, return a body
