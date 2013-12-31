@@ -13,12 +13,22 @@ var pg = require('co-pg')
 
 // ----------------------------------------------------------------------------
 
-module.exports = function(conStr) {
+module.exports = function(opts) {
     "use strict"
 
+    if ( typeof opts === 'string' ) {
+        opts = { conStr : opts };
+    }
+
+    // set this db name
+    opts.name = opts.name || 'db';
+
     return function *koaPg(next) {
-        var connect = yield pg.connect_(conStr)
-        this.pg = {
+        // set up where we store all the DB connections
+        this.pg = this.pg || {};
+
+        var connect = yield pg.connect_(opts.conStr)
+        this.pg[opts.name] = {
             client : connect[0],
             done   : connect[1],
         }
@@ -30,14 +40,14 @@ module.exports = function(conStr) {
         catch (e) {
             // Since there was an error somewhere down the middleware,
             // then we need to throw this client away.
-            this.pg.done(e)
-            delete this.pg
+            this.pg[opts.name].done(e)
+            delete this.pg[opts.name];
             throw e
         }
 
         // on the way back up the stack, release the client
-        this.pg.done()
-        delete this.pg
+        this.pg[opts.name].done()
+        delete this.pg[opts.name]
     }
     
 }
