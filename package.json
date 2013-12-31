@@ -1,7 +1,7 @@
 {
   "name": "koa-pg",
   "description": "Koa middleware to get you a Postgres client.",
-  "version": "0.10.1",
+  "version": "0.23.0",
   "homepage": "https://github.com/chilts/koa-pg",
   "dependencies": {
     "co-pg": "~0.1.1"
