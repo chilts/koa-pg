@@ -15,7 +15,7 @@ app.use(pgKoa('postgres://clubsonline@localhost/clubsonline'))
 
 app.use(function *(next) {
     // Here we have access to this.pg which is client returned from pg.connect().
-    var result = yield this.client.query_('SELECT now()')
+    var result = yield this.pg.client.query_('SELECT now()')
     console.log('result:', result)
 
     this.body = result.rows[0].now.toISOString()
