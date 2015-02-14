@@ -9,15 +9,15 @@
 // ----------------------------------------------------------------------------
 
 // npm
-var pg = require('co-pg')
+var pg = require('co-pg')(require('pg'));
 
 // ----------------------------------------------------------------------------
 
 module.exports = function(opts) {
     "use strict"
 
-    if ( typeof opts === 'string' ) {
-        opts = { conStr : opts };
+    if (typeof opts === 'string') {
+        opts = {conStr: opts};
     }
 
     // set this db name
@@ -27,28 +27,43 @@ module.exports = function(opts) {
         // set up where we store all the DB connections
         this.pg = this.pg || {};
 
-        var connect = yield pg.connect_(opts.conStr)
+        //From http://ivc.com/blog/better-sql-strings-in-io-js-nodejs-part-2/
+        this.pg.sqltpl = function (pieces) {
+            var result = '';
+            var vals = [];
+            var substitutions = [].slice.call(arguments, 1);
+            for (var i = 0; i < substitutions.length; ++i) {
+                result += pieces[i] + '$' + (i + 1);
+                vals.push(substitutions[i]);
+            }
+
+            result += pieces[substitutions.length];
+            return {text: result, values: vals};
+        };
+
+        var connectionResults = yield pg.connectPromise(opts.conStr);
+
         this.pg[opts.name] = {
-            client : connect[0],
-            done   : connect[1],
-        }
+            client: connectionResults[0],
+            done: connectionResults[1]
+        };
 
         // yield to all middlewares
         try {
-            yield next
+            yield next;
         }
         catch (e) {
             // Since there was an error somewhere down the middleware,
             // then we need to throw this client away.
-            this.pg[opts.name].done(e)
+            this.pg[opts.name].done(e);
             delete this.pg[opts.name];
-            throw e
+            throw e;
         }
 
         // on the way back up the stack, release the client
-        this.pg[opts.name].done()
-        delete this.pg[opts.name]
-    }
+        this.pg[opts.name].done();
+        delete this.pg[opts.name];
+    };
     
 }
 
