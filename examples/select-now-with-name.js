@@ -10,7 +10,7 @@ app.use(koaPg({
 
 app.use(function *(next) {
     // Here we have access to this.pg which is client returned from pg.connect().
-    var result = yield this.pg.mydb.client.query_('SELECT now()')
+    var result = yield this.pg.mydb.client.queryPromise('SELECT now()')
     console.log('result:', result)
 
     // if we get here, return a body
