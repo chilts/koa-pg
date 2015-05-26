@@ -22,12 +22,7 @@
     "url": "https://github.com/chilts/koa-pg/issues",
     "mail": "andychilton@gmail.com"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://chilts.mit-license.org/2013/"
-    }
-  ],
+  "license": "MIT",
   "keywords": [
     "koa",
     "koa middleware",

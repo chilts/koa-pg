@@ -84,8 +84,4 @@ app.use(function *(next) {
 Written by [Andrew Chilton](http://chilts.org/) - [Blog](http://chilts.org/blog/) -
 [Twitter](https://twitter.com/andychilton).
 
-## License ##
-
-MIT - http://chilts.mit-license.org/2013/
-
 (Ends)
