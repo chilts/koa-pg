@@ -1,3 +1,5 @@
+Note: This project is in need of an owner or maintainer since I don't use it. I fear my pulling of PRs isn't making it better since it requires more of an overview by someone. Please get in touch. :) Thanks.
+
 # koa-pg #
 
 Koa middleware to get you a Postgres client on the way down the middlewares, and release it on the way back up the
