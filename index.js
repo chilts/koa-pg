@@ -41,7 +41,7 @@ module.exports = function(opts) {
             return {text: result, values: vals};
         };
 
-        var connectionResults = yield pg.connectPromise(opts.conStr);
+        var connectionResults = yield pg.connectPromise(opts.conStr || opts);
 
         this.pg[opts.name] = {
             client: connectionResults[0],
