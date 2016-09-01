@@ -19,6 +19,12 @@ module.exports = function(opts) {
     if (typeof opts === 'string') {
         opts = {pg: opts};
     }
+    // For legacy support when 'pg' was named 'conStr'.
+    else if (typeof opts.conStr !== 'undefined' &&
+          typeof opts.pg === 'undefined')
+    {
+        //opts.pg = opts.conStr;
+    }
 
     // set this db name
     opts.name = opts.name || 'db';
