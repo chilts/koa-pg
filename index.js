@@ -17,7 +17,13 @@ module.exports = function(opts) {
     "use strict"
 
     if (typeof opts === 'string') {
-        opts = {conStr: opts};
+        opts = {pg: opts};
+    }
+    // For legacy support when 'pg' was named 'conStr'.
+    else if (typeof opts.conStr !== 'undefined' &&
+          typeof opts.pg === 'undefined')
+    {
+        //opts.pg = opts.conStr;
     }
 
     // set this db name
@@ -41,7 +47,7 @@ module.exports = function(opts) {
             return {text: result, values: vals};
         };
 
-        var connectionResults = yield pg.connectPromise(opts.conStr);
+        var connectionResults = yield pg.connectPromise(opts.pg);
 
         this.pg[opts.name] = {
             client: connectionResults[0],
