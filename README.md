@@ -30,6 +30,35 @@ app.use(function *(next) {
 app.listen(3000)
 ```
 
+With a `node-postgres` config object, client pooling enabled:
+
+```js
+var koa = require('koa')
+var koaPg = require('koa-pg')
+
+var app = koa()
+
+var config = {
+    name: 'master_db',
+    pg: {
+        user: 'postgres',
+	database: 'db',
+	password: 'pass',
+	port: 5432,
+	max: 10,
+	idleTimeoutMillis: 60
+    }
+}	
+
+app.use(koaPg(config))
+
+app.use(function *(next) {
+    // ...
+})
+
+app.listen(3000)
+```
+
 ## Options ##
 
 * 'name' : default -> 'db'
@@ -41,7 +70,7 @@ the default. See below if you require two or more database connections (such as 
 ```
 app.use(koaPg({
     name   : 'master',
-    conStr : 'postgres://user:password@localhost:5432/database'
+    pg : 'postgres://user:password@localhost:5432/database'
 }))
 
 app.use(function *(next) {
@@ -49,6 +78,11 @@ app.use(function *(next) {
     this.body = result.rows[0].now.toISOString()
 })
 ```
+
+* 'pg'
+
+This is the parameter that is passed via `co-pg` to `node-postgres`. It can be
+either a string or an object.
 
 ## Multiple Database Connections ##
 
@@ -60,12 +94,12 @@ depending on what operations you are doing).
 ```
 app.use(koaPg({
     name   : 'master',
-    conStr : 'postgres://user:password@masterhost:5432/database'
+    pg : 'postgres://user:password@masterhost:5432/database'
 }))
 
 app.use(koaPg({
     name   : 'slave',
-    conStr : 'postgres://user:password@slavehost:5432/database'
+    pg : 'postgres://user:password@slavehost:5432/database'
 }))
 
 // a write query
