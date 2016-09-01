@@ -30,35 +30,6 @@ app.use(function *(next) {
 app.listen(3000)
 ```
 
-With a `node-postgres` config object, client pooling enabled:
-
-```js
-var koa = require('koa')
-var koaPg = require('koa-pg')
-
-var app = koa()
-
-var config = {
-    name: 'master_db',
-    pg: {
-        user: 'postgres',
-	database: 'db',
-	password: 'pass',
-	port: 5432,
-	max: 10,
-	idleTimeoutMillis: 60
-    }
-}	
-
-app.use(koaPg(config))
-
-app.use(function *(next) {
-    // ...
-})
-
-app.listen(3000)
-```
-
 ## Options ##
 
 * 'name' : default -> 'db'
@@ -82,7 +53,23 @@ app.use(function *(next) {
 * 'pg'
 
 This is the parameter that is passed via `co-pg` to `node-postgres`. It can be
-either a string or an object.
+either a string or an object and conforms to the API as provided by the aforementioned modules.
+
+```js
+var config = {
+    name: 'master_db',
+    pg: {
+        user: 'postgres',
+        database: 'db',
+        password: 'pass',
+        port: 5432,
+        max: 10,
+        idleTimeoutMillis: 60
+    }
+}
+
+app.use(koaPg(config))
+```
 
 ## Multiple Database Connections ##
 
